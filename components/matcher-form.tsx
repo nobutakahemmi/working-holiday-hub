@@ -7,13 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Disclaimer } from "@/components/disclaimer";
 import { Fact } from "@/components/fact";
 import {
@@ -76,18 +69,21 @@ export function MatcherForm() {
           <form onSubmit={onSubmit} className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="passport">Passport</Label>
-              <Select value={passport} onValueChange={(value) => setPassport(String(value))}>
-                <SelectTrigger id="passport" className="w-full">
-                  <SelectValue placeholder="Select a passport" />
-                </SelectTrigger>
-                <SelectContent>
-                  {passports.map((name) => (
-                    <SelectItem key={name} value={name}>
-                      {name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <select
+                id="passport"
+                name="passport"
+                required
+                value={passport}
+                onChange={(event) => setPassport(event.target.value)}
+                className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+              >
+                <option value="">Select a passport</option>
+                {passports.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="age">Age at application</Label>
