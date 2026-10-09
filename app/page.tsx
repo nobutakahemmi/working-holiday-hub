@@ -1,7 +1,17 @@
+import { Suspense } from "react";
 import { MatcherForm } from "@/components/matcher-form";
 import { WaitlistForm } from "@/components/waitlist-form";
 
-export default function HomePage() {
+type HomeProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
+async function MatcherSection({ searchParams }: HomeProps) {
+  const params = await searchParams;
+  return <MatcherForm searchParams={params} />;
+}
+
+export default function HomePage({ searchParams }: HomeProps) {
   return (
     <div className="grid gap-10">
       <section className="grid gap-3">
@@ -17,7 +27,13 @@ export default function HomePage() {
           from a government page. Missing numbers stay blank.
         </p>
       </section>
-      <MatcherForm />
+      <Suspense
+        fallback={
+          <p className="text-sm text-muted-foreground">Loading the matcher…</p>
+        }
+      >
+        <MatcherSection searchParams={searchParams} />
+      </Suspense>
       <WaitlistForm />
     </div>
   );

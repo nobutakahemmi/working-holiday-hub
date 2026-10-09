@@ -1,10 +1,7 @@
-"use client";
-
-import { useMemo, useState } from "react";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Disclaimer } from "@/components/disclaimer";
@@ -17,47 +14,39 @@ import {
   uniquePassports,
 } from "@/lib/data";
 import { matchEligibility } from "@/lib/match";
-import { INTERESTS, type Interest } from "@/lib/types";
+import { INTERESTS, type Interest, type MatcherInput } from "@/lib/types";
 
-export function MatcherForm() {
-  const passports = useMemo(() => uniquePassports(), []);
-  const [passport, setPassport] = useState("");
-  const [age, setAge] = useState("");
-  const [startMonth, setStartMonth] = useState("2026-11");
-  const [interests, setInterests] = useState<Interest[]>([]);
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState("");
+function asArray(value: string | string[] | undefined) {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+}
 
-  function toggleInterest(interest: Interest, checked: boolean) {
-    setInterests((current) =>
-      checked ? [...current, interest] : current.filter((item) => item !== interest),
-    );
-  }
+export function parseMatcherInput(
+  searchParams: Record<string, string | string[] | undefined>,
+): MatcherInput | null {
+  const passport = String(searchParams.passport ?? "");
+  const age = Number(searchParams.age);
+  if (!passport || !Number.isInteger(age)) return null;
+  const interests = asArray(searchParams.interests).filter((item): item is Interest =>
+    INTERESTS.includes(item as Interest),
+  );
+  return {
+    passport,
+    age,
+    startMonth: String(searchParams.start ?? ""),
+    interests,
+  };
+}
 
-  const results = useMemo(() => {
-    if (!submitted || !passport || !age) return [];
-    return matchEligibility({
-      passport,
-      age: Number(age),
-      startMonth,
-      interests,
-    });
-  }, [submitted, passport, age, startMonth, interests]);
-
-  function onSubmit(event: React.FormEvent) {
-    event.preventDefault();
-    if (!passport) {
-      setError("Choose the passport you will apply with.");
-      return;
-    }
-    const parsedAge = Number(age);
-    if (!Number.isInteger(parsedAge) || parsedAge < 16 || parsedAge > 80) {
-      setError("Enter your age as a whole number.");
-      return;
-    }
-    setError("");
-    setSubmitted(true);
-  }
+export function MatcherForm({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>;
+}) {
+  const passports = uniquePassports();
+  const input = parseMatcherInput(searchParams);
+  const results = input ? matchEligibility(input) : null;
+  const selectedInterests = new Set(input?.interests ?? asArray(searchParams.interests));
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,22rem)_1fr]">
@@ -66,25 +55,20 @@ export function MatcherForm() {
           <CardTitle>Check where you can go</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={onSubmit} className="grid gap-4">
+          <form method="get" action="/" className="grid gap-4">
             <fieldset className="grid gap-2">
               <legend className="text-sm font-medium">Passport</legend>
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {passports.map((name) => (
                   <label
                     key={name}
-                    className={`flex cursor-pointer items-center gap-2 rounded-lg border px-2.5 py-2 text-sm ${
-                      passport === name
-                        ? "border-foreground bg-muted"
-                        : "border-input"
-                    }`}
+                    className="flex cursor-pointer items-center gap-2 rounded-lg border border-input px-2.5 py-2 text-sm has-[:checked]:border-foreground has-[:checked]:bg-muted"
                   >
                     <input
                       type="radio"
                       name="passport"
                       value={name}
-                      checked={passport === name}
-                      onChange={() => setPassport(name)}
+                      defaultChecked={String(searchParams.passport ?? "") === name}
                       required
                     />
                     {name}
@@ -101,8 +85,7 @@ export function MatcherForm() {
                 inputMode="numeric"
                 min={16}
                 max={80}
-                value={age}
-                onChange={(event) => setAge(event.target.value)}
+                defaultValue={String(searchParams.age ?? "")}
                 required
               />
             </div>
@@ -112,8 +95,7 @@ export function MatcherForm() {
                 id="start"
                 name="start"
                 type="month"
-                value={startMonth}
-                onChange={(event) => setStartMonth(event.target.value)}
+                defaultValue={String(searchParams.start ?? "2026-11")}
               />
             </div>
             <fieldset className="grid gap-2">
@@ -121,45 +103,32 @@ export function MatcherForm() {
               <div className="grid gap-2 sm:grid-cols-2">
                 {INTERESTS.map((interest) => (
                   <label key={interest} className="flex items-center gap-2 text-sm">
-                    <Checkbox
-                      checked={interests.includes(interest)}
-                      onCheckedChange={(checked) =>
-                        toggleInterest(interest, checked === true)
-                      }
+                    <input
+                      type="checkbox"
+                      name="interests"
+                      value={interest}
+                      defaultChecked={selectedInterests.has(interest)}
                     />
                     {interest}
                   </label>
                 ))}
               </div>
             </fieldset>
-            {error ? (
-              <p className="text-sm text-destructive" role="alert">
-                {error}
-              </p>
-            ) : null}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Button type="submit">Show destinations</Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  setPassport("United Kingdom");
-                  setAge("24");
-                  setStartMonth("2026-11");
-                  setInterests(["ski/snow", "hospitality"]);
-                  setError("");
-                  setSubmitted(true);
-                }}
+              <Link
+                className="text-sm underline underline-offset-4"
+                href="/?passport=United+Kingdom&age=24&start=2026-11&interests=ski%2Fsnow&interests=hospitality"
               >
                 Try UK winter example
-              </Button>
+              </Link>
             </div>
           </form>
         </CardContent>
       </Card>
 
-      <div aria-live="polite" className="grid gap-4">
-        {!submitted ? (
+      <div className="grid gap-4">
+        {results == null ? (
           <Card>
             <CardContent className="pt-6 text-sm text-muted-foreground">
               Choose a passport and age to see Japan (and Korea, for US passports)
