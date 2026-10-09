@@ -51,9 +51,7 @@ export function matchEligibility(input: MatcherInput): MatchResult[] {
       }
     }
 
-    const hubs = qualifies
-      ? hubsFor(row.destination, input.interests)
-      : hubsFor(row.destination);
+    const hubs = qualifies ? hubsFor(row.destination, input.interests) : [];
 
     return { row, qualifies, reasons, hubs };
   });
