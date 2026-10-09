@@ -67,24 +67,31 @@ export function MatcherForm() {
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="passport">Passport</Label>
-              <select
-                id="passport"
-                name="passport"
-                required
-                value={passport}
-                onChange={(event) => setPassport(event.target.value)}
-                className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-              >
-                <option value="">Select a passport</option>
+            <fieldset className="grid gap-2">
+              <legend className="text-sm font-medium">Passport</legend>
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {passports.map((name) => (
-                  <option key={name} value={name}>
+                  <label
+                    key={name}
+                    className={`flex cursor-pointer items-center gap-2 rounded-lg border px-2.5 py-2 text-sm ${
+                      passport === name
+                        ? "border-foreground bg-muted"
+                        : "border-input"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="passport"
+                      value={name}
+                      checked={passport === name}
+                      onChange={() => setPassport(name)}
+                      required
+                    />
                     {name}
-                  </option>
+                  </label>
                 ))}
-              </select>
-            </div>
+              </div>
+            </fieldset>
             <div className="grid gap-2">
               <Label htmlFor="age">Age at application</Label>
               <Input
@@ -130,7 +137,23 @@ export function MatcherForm() {
                 {error}
               </p>
             ) : null}
-            <Button type="submit">Show destinations</Button>
+            <div className="flex flex-wrap gap-2">
+              <Button type="submit">Show destinations</Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setPassport("United Kingdom");
+                  setAge("24");
+                  setStartMonth("2026-11");
+                  setInterests(["ski/snow", "hospitality"]);
+                  setError("");
+                  setSubmitted(true);
+                }}
+              >
+                Try UK winter example
+              </Button>
+            </div>
           </form>
         </CardContent>
       </Card>
