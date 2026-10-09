@@ -1,0 +1,61 @@
+{
+  "jobs": [
+    {
+      "slug": "niseko-annupuri-winter-lodge-2026",
+      "title": "Winter lodge guest staff",
+      "employer": "Annupuri Ridge Lodge",
+      "verified_employer": true,
+      "commission_only": false,
+      "location": "Niseko, Hokkaido, Japan",
+      "hub": "niseko",
+      "season_start": "2026-11-20",
+      "season_end": "2027-03-31",
+      "pay": "¥1,200–¥1,400 per hour, plus shared staff meals on shift.",
+      "housing_provided": true,
+      "language_required": "English required. Japanese N4 or conversational Japanese preferred, not required.",
+      "visa_types_accepted": ["Japan Working Holiday"],
+      "role_types": ["hospitality", "ski/snow"],
+      "headcount": 6,
+      "summary": "Front-of-house and lodge operations for the 2026–27 winter. Shared staff housing above the village bus route.",
+      "posted_at": "2026-10-01"
+    },
+    {
+      "slug": "hakuba-valley-hostel-winter-2026",
+      "title": "Hostel reception and housekeeper",
+      "employer": "Hakuba Valley Hostel",
+      "verified_employer": true,
+      "commission_only": false,
+      "location": "Hakuba, Nagano, Japan",
+      "hub": "hakuba",
+      "season_start": "2026-12-01",
+      "season_end": "2027-03-20",
+      "pay": "¥1,150 per hour. Ski pass contribution after 30 days.",
+      "housing_provided": true,
+      "language_required": "English required. Basic Japanese helpful.",
+      "visa_types_accepted": ["Japan Working Holiday"],
+      "role_types": ["hostels", "hospitality", "ski/snow"],
+      "headcount": 4,
+      "summary": "Check-in desk, dorm turns, and guest info for backpackers and seasonal workers.",
+      "posted_at": "2026-10-03"
+    },
+    {
+      "slug": "kyoto-gion-inn-year-round",
+      "title": "Ryokan attendant",
+      "employer": "Gion Cedar Inn",
+      "verified_employer": true,
+      "commission_only": false,
+      "location": "Higashiyama, Kyoto, Japan",
+      "hub": "kyoto",
+      "season_start": "2026-11-01",
+      "season_end": "2027-10-31",
+      "pay": "¥1,250 per hour plus evening meal on late shifts.",
+      "housing_provided": false,
+      "language_required": "Japanese N3 or higher required. English useful for overseas guests.",
+      "visa_types_accepted": ["Japan Working Holiday"],
+      "role_types": ["hospitality", "tourism"],
+      "headcount": 2,
+      "summary": "Yukata service, breakfast set, and guest welcome in a small traditional inn. Minimum four-month commitment.",
+      "posted_at": "2026-09-20"
+    }
+  ]
+}

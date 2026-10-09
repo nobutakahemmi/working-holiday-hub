@@ -1,0 +1,76 @@
+{
+  "hubs": [
+    {
+      "id": "niseko",
+      "name": "Niseko",
+      "destination": "Japan",
+      "region": "Hokkaido",
+      "season": "Winter peak: late November–early April (2026–27 snow season).",
+      "typical_jobs": [
+        "Ski and snowboard instructor",
+        "Lift operations",
+        "Hotel and ryokan front desk",
+        "Restaurant and bar service (not adult-entertainment venues)",
+        "Hostel reception"
+      ],
+      "interests": ["ski/snow", "hospitality", "hostels", "tourism"]
+    },
+    {
+      "id": "hakuba",
+      "name": "Hakuba",
+      "destination": "Japan",
+      "region": "Nagano",
+      "season": "Winter peak: December–March (2026–27 snow season).",
+      "typical_jobs": [
+        "Ski resort operations",
+        "Hotel and pension staff",
+        "Hostel reception",
+        "Restaurant service",
+        "Guest activities"
+      ],
+      "interests": ["ski/snow", "hospitality", "hostels", "tourism"]
+    },
+    {
+      "id": "tokyo",
+      "name": "Tokyo",
+      "destination": "Japan",
+      "region": "Kanto",
+      "season": "Year-round. Hiring stays busy around cherry blossom (March–April) and autumn (October–November).",
+      "typical_jobs": [
+        "Hostel reception",
+        "Cafe and restaurant service",
+        "Tourism and guest relations",
+        "Light office and admin support"
+      ],
+      "interests": ["hospitality", "hostels", "tourism", "office"]
+    },
+    {
+      "id": "kyoto",
+      "name": "Kyoto",
+      "destination": "Japan",
+      "region": "Kansai",
+      "season": "Year-round. Strongest demand in spring and autumn tourism peaks.",
+      "typical_jobs": [
+        "Traditional inn (ryokan) staff",
+        "Hostel reception",
+        "Tea house and restaurant service",
+        "Tourism assistance"
+      ],
+      "interests": ["hospitality", "hostels", "tourism"]
+    },
+    {
+      "id": "okinawa",
+      "name": "Okinawa",
+      "destination": "Japan",
+      "region": "Okinawa",
+      "season": "Warm-weather peak: March–October. Some beach resorts also hire through winter.",
+      "typical_jobs": [
+        "Beach and resort hospitality",
+        "Hostel reception",
+        "Tour desk",
+        "Cafe service"
+      ],
+      "interests": ["hospitality", "hostels", "tourism"]
+    }
+  ]
+}
